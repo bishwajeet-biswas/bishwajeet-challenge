@@ -51,8 +51,9 @@ detect_and_install_node() {
 }
 
 detect_valide_node_version() {
-    if [node -v | cut -d . -f 1 | sed 's/v//g' -ge $REQUIRED_NODE_VERSION ]; then
-        echo "node version is 18,  check if it greater than 18.0"
+    NODE_VERSION=$(node -v | cut -d . -f 1 | sed 's/v//g')
+    if [ "$NODE_VERSION" -ge "$REQUIRED_NODE_VERSION" ]; then
+        echo "node version is 18, check if it greater than 18.0"
         return
     fi
 }
