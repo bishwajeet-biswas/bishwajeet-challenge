@@ -17,4 +17,12 @@ COPY src ./src
 COPY package*.json ./
 COPY .env_example ./
 EXPOSE 3000
-ENTRYPOINT ["/bin/bash", "-c", "if [ \"$SCRIPT_TYPE\" = \"git_install\" ]; then bash ./install.sh; else bash ./setup.sh; fi"]
+ENTRYPOINT ["/bin/bash", "-c", "if [ \"$SCRIPT_TYPE\" = \"setup\" ]; then \
+  bash ./setup.sh; \
+elif [ \"$SCRIPT_TYPE\" = \"git_install\" ]; then \
+  bash ./install.sh; \
+else \
+  echo \"[ERROR] Invalid SCRIPT_TYPE: $SCRIPT_TYPE\"; \
+  echo \"Valid values are: setup | git_install\"; \
+  exit 1; \
+fi"]
